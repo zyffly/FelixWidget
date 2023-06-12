@@ -4,11 +4,15 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.core.content.FileProvider
+import java.io.BufferedReader
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.InputStreamReader
 
 
 /**
@@ -75,9 +79,9 @@ fun Context.createImageFile(): File? {
 /**
  * 创建视频文件
  */
-fun Context.createVideoFile(): File? {
+fun Context.createVideoFile(name: String): File? {
     getVideoDirPath()?.apply {
-        return createFile(this, getTime().toString(), ".mp4")
+        return createFile(this, name, ".mp4")
     }
     return null
 }
@@ -85,9 +89,9 @@ fun Context.createVideoFile(): File? {
 /**
  * 创建音频文件
  */
-fun Context.createAudioFile(): File? {
+fun Context.createAudioFile(name: String): File? {
     getAudioDirPath()?.apply {
-        return createFile(this, getTime().toString(), ".mp3")
+        return createFile(this, name, ".mp3")
     }
     return null
 }
@@ -169,3 +173,81 @@ fun File.toUri(context: Context): Uri =
         Uri.fromFile(this)
     }
 
+/**
+ * 读取json文件输出string类型
+ *
+ * @param context
+ * @param txt
+ * @return
+ */
+fun String.readAssetFile(context: Context): String? {
+    try {
+        val stringBuilder = StringBuilder()
+        //获取assets资源管理器
+        val assetManager = context.assets
+        //通过管理器打开文件并读取
+        BufferedReader(
+            InputStreamReader(
+                assetManager.open(this)
+            )
+        ).run {
+            var line: String?
+            do {
+                line = readLine()
+                if (line != null) {
+                    stringBuilder.append(line)
+                } else {
+                    break
+                }
+            } while (true)
+            close()
+            return stringBuilder.toString()
+        }
+    } catch (e: IOException) {
+        Log.w("readAssetFile", "IOException:${e.message}")
+    }
+    return null
+}
+
+/**
+ * 读取指定路径的文件内容
+ */
+fun String.readFile(): String? {
+    File(this).apply {
+        if (exists()) {
+            return readFile()
+        }
+    }
+    return null
+}
+
+
+/**
+ * 读取文件内容
+ */
+fun File.readFile(): String? {
+    try {
+        val stringBuilder = StringBuilder()
+        FileInputStream(this).apply {
+            val inputStreamReader = InputStreamReader(this, "GBK")
+            BufferedReader(inputStreamReader).apply {
+                var line: String? = null
+                //分行读取
+                do {
+                    line = readLine()
+                    if (line != null) {
+                        stringBuilder.append(line)
+                    } else {
+                        break
+                    }
+                } while (true)
+                close()
+            }
+            inputStreamReader.close()
+        }
+        return stringBuilder.toString()
+    } catch (e: Exception) {
+        Log.e("File.readFile", "Exception:${e.message}")
+    }
+    return null
+}
