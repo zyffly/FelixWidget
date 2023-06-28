@@ -33,7 +33,7 @@ fun Context.targetSdkVersion() = applicationContext.applicationInfo.targetSdkVer
  * 是否开启开发者模式
  */
 fun Context.isOpenDevelopSetting() =
-    Settings.Secure.getInt(contentResolver, Settings.Global.ADB_ENABLED, 0) > 0
+    Settings.Secure.getInt(contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) > 0
 
 /**
  * 是否开启adb调试
