@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.felix.sample.ui.theme.FelixWidgetTheme
+import com.felix.tools.ToolLog
+import com.felix.tools.hideZhCnPhoneNumber
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +27,7 @@ class MainActivity : ComponentActivity() {
                     Greeting("Android")
                 }
             }
+            ToolLog.e("zyf-test","15011571875".hideZhCnPhoneNumber())
         }
     }
 }

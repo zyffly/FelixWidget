@@ -38,11 +38,6 @@ object ToolLog {
     }
 
     @JvmStatic
-    fun printStackTrace(e: Exception?) {
-        if (mIsDebug && e != null) e.printStackTrace()
-    }
-
-    @JvmStatic
     fun printStackTrace(t: Throwable?) {
         if (mIsDebug && t != null) t.printStackTrace()
     }

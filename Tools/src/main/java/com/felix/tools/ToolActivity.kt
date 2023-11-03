@@ -52,3 +52,10 @@ fun ComponentActivity.registerTakePictureActivityResult(callback: ActivityResult
  */
 fun ComponentActivity.registerAlbumActivityResult(callback: ActivityResultCallback<Uri?>) =
         registerForActivityResult(ActivityResultContracts.GetContent(), callback)
+
+
+/**
+ * 调用系统录像
+ */
+fun ComponentActivity.registerCaptureVideoActivityResult(callback: ActivityResultCallback<Boolean>) =
+    registerForActivityResult(ActivityResultContracts.CaptureVideo(), callback)
