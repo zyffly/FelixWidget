@@ -13,6 +13,7 @@ captures/
 .externalNativeBuild/
 .cxx/
 *.apk
+*.aarVersion
 output.json
 
 # IntelliJ

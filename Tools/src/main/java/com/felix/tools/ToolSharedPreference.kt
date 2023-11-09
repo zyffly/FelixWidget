@@ -19,11 +19,11 @@ object ToolSharedPreference {
     private var mPreferences: SharedPreferences? = null
 
     @JvmStatic
-    fun getSharedPreferences(context: Context): SharedPreferences {
+    fun Context.getSharedPreferences(): SharedPreferences {
         mPreferences?.let {
             return it
         }
-        return context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE).apply {
+        return getSharedPreferences(packageName, Context.MODE_PRIVATE).apply {
             mPreferences = this
         }
     }
@@ -32,11 +32,11 @@ object ToolSharedPreference {
      * 保存数据公用类：String
      */
     @JvmStatic
-    fun saveString(context: Context, key: String?, value: String?) {
-        if (key.isNullOrEmpty() || value.isNullOrEmpty()) {
+    fun Context.saveSpString(key: String, value: String) {
+        if (key.isEmpty() || value.isEmpty()) {
             return
         }
-        val editor = getSharedPreferences(context).edit()
+        val editor = getSharedPreferences().edit()
         editor.putString(key, value)
         editor.apply()
     }
@@ -46,22 +46,22 @@ object ToolSharedPreference {
      */
     @JvmStatic
     @JvmOverloads
-    fun getString(context: Context, key: String, default: String? = null): String? {
+    fun Context.getSpString(key: String, default: String? = null): String? {
         if (TextUtils.isEmpty(key)) {
             return default
         }
-        return getSharedPreferences(context).getString(key, default)
+        return getSharedPreferences().getString(key, default)
     }
 
     /**
      * 保存数据公用类:Int
      */
     @JvmStatic
-    fun saveInt(context: Context, key: String, value: Int) {
+    fun Context.saveSpInt(key: String, value: Int) {
         if (TextUtils.isEmpty(key)) {
             return
         }
-        val editor = getSharedPreferences(context).edit()
+        val editor = getSharedPreferences().edit()
         editor.putInt(key, value)
         editor.apply()
     }
@@ -71,22 +71,22 @@ object ToolSharedPreference {
      * 获取数据公用类:Int
      */
     @JvmStatic
-    fun getInt(context: Context, key: String, default: Int): Int {
+    fun Context.getSpInt(key: String, default: Int): Int {
         if (TextUtils.isEmpty(key)) {
             return default
         }
-        return getSharedPreferences(context).getInt(key, default)
+        return getSharedPreferences().getInt(key, default)
     }
 
     /**
      * 保存数据公用类:Long
      */
     @JvmStatic
-    fun saveLong(context: Context, key: String, value: Long) {
+    fun Context.saveSpLong(key: String, value: Long) {
         if (TextUtils.isEmpty(key)) {
             return
         }
-        val editor = getSharedPreferences(context).edit()
+        val editor = getSharedPreferences().edit()
         editor.putLong(key, value)
         editor.apply()
     }
@@ -95,22 +95,22 @@ object ToolSharedPreference {
      * 获取数据公用类:Long
      */
     @JvmStatic
-    fun getLong(context: Context, key: String, default: Long): Long {
+    fun Context.getSpLong(key: String, default: Long): Long {
         if (TextUtils.isEmpty(key)) {
             return default
         }
-        return getSharedPreferences(context).getLong(key, default)
+        return getSharedPreferences().getLong(key, default)
     }
 
     /**
      * 保存数据公用类:Boolean
      */
     @JvmStatic
-    fun saveBoolean(context: Context, key: String, value: Boolean) {
+    fun Context.saveSpBoolean(key: String, value: Boolean) {
         if (TextUtils.isEmpty(key)) {
             return
         }
-        val editor = getSharedPreferences(context).edit()
+        val editor = getSharedPreferences().edit()
         editor.putBoolean(key, value)
         editor.apply()
     }
@@ -119,33 +119,36 @@ object ToolSharedPreference {
      * 获取数据公用类:Boolean
      */
     @JvmStatic
-    fun getBoolean(context: Context, key: String, default: Boolean): Boolean {
+    fun Context.getSpBoolean(key: String, default: Boolean): Boolean {
         if (TextUtils.isEmpty(key)) {
             return default
         }
-        return getSharedPreferences(context).getBoolean(key, default)
+        return getSharedPreferences().getBoolean(key, default)
     }
 
     @JvmStatic
-    fun saveSerializable(context: Context, key: String, value: Serializable?) {
-        if (TextUtils.isEmpty(key) || null == value) {
+    fun Context.saveSpSerializable(key: String, value: Serializable) {
+        if (TextUtils.isEmpty(key)) {
             return
         }
         try {
-            val baos = ByteArrayOutputStream()
-            val oos = ObjectOutputStream(baos)
+            val bos = ByteArrayOutputStream()
+            val oos = ObjectOutputStream(bos)
             oos.writeObject(value)
-            val objBase64 = String(Base64.encode(baos.toByteArray(), Base64.DEFAULT))
-            saveString(context, key, objBase64)
+            val objBase64 = String(Base64.encode(bos.toByteArray(), Base64.DEFAULT))
+            saveSpString(key, objBase64)
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
     @JvmStatic
-    fun getSerializable(context: Context, key: String): Serializable? {
+    fun Context.getSpSerializable(key: String): Serializable? {
+        if (TextUtils.isEmpty(key)) {
+            return null
+        }
         try {
-            val objBase64: String? = getString(context, key, null)
+            val objBase64: String? = getSpString(key, null)
             if (TextUtils.isEmpty(objBase64)) {
                 return null
             }
@@ -166,8 +169,8 @@ object ToolSharedPreference {
      * @param keys
      */
     @JvmStatic
-    fun clearValue(context: Context, vararg keys: String) {
-        val preferences: SharedPreferences = getSharedPreferences(context)
+    fun Context.clearValue(vararg keys: String) {
+        val preferences: SharedPreferences = getSharedPreferences()
         val editor = preferences.edit()
         keys.forEach {
             if (TextUtils.isEmpty(it)) {
@@ -181,8 +184,8 @@ object ToolSharedPreference {
     }
 
     @JvmStatic
-    fun clearAll(context: Context) {
-        val editor: SharedPreferences.Editor = getSharedPreferences(context).edit()
+    fun Context.clearAll() {
+        val editor: SharedPreferences.Editor = getSharedPreferences().edit()
         editor.clear()
         editor.apply()
     }
