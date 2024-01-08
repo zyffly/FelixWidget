@@ -10,12 +10,12 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 33
-        versionCode 3
-        versionName "1.0.7"
+        versionCode 4
+        versionName "1.0.8"
 
         buildConfigField("String", "VERSION_NAME", "\"$versionName\"")
         buildConfigField("int", "VERSION_CODE", "$versionCode")
-        buildConfigField("String", "VERSION_DSC", "\"1.修改ToolSharedPreference所有方法的实现是实现. 2. 新增获取文件的MD5\"")
+        buildConfigField("String", "VERSION_DSC", "\"${versionDsc}\"")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

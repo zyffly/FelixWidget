@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
-import android.util.Log
 import androidx.core.content.FileProvider
 import java.io.BufferedReader
 import java.io.BufferedWriter

@@ -1,0 +1,6 @@
+ext {
+    versionDsc =
+            "1.修改ToolsTime中的String?.dateToLong函数，支持自定义时间类型。\\n " +
+            "2.ToolFunction添加breakForEach和breakForEachIndexed函数,For循环时，达到某种条件，跳出否循环，并返回下标。循环完后，还没有达到触发条件，则继续"
+
+}

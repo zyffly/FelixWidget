@@ -1,6 +1,7 @@
 # Gradle files
 .gradle/
 build/
+aarVersion/
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -13,7 +14,6 @@ captures/
 .externalNativeBuild/
 .cxx/
 *.apk
-.aarVersion
 output.json
 
 # IntelliJ

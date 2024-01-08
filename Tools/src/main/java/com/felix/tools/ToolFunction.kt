@@ -23,6 +23,70 @@ inline fun <T> ifElse(data: T?, booTrue: (T) -> Unit, noinline booFalse: (() -> 
         booFalse?.invoke()
     }
 
+/**
+ * For循环时，达到某种条件，跳出否循环，并返回值
+ */
+inline fun <T> Iterable<T>.breakForEach(booTrue: (T) -> Boolean) {
+    kotlin.run run@{
+        forEach {
+            if (booTrue(it)) {
+                return@run
+            }
+        }
+    }
+}
+
+/**
+ * For循环时，达到某种条件，跳出否循环，并返回值
+ */
+inline fun <T> Array<T>.breakForEach(booTrue: (T) -> Boolean) {
+    kotlin.run run@{
+        forEach {
+            if (booTrue(it)) {
+                return@run
+            }
+        }
+    }
+}
+
+/**
+ * For循环时，达到某种条件，跳出否循环，并返回值
+ */
+inline fun <T> Collection<T>.breakForEach(booTrue: (T) -> Boolean) {
+    kotlin.run run@{
+        forEach {
+            if (booTrue(it)) {
+                return@run
+            }
+        }
+    }
+}
+
+/**
+ * For循环时，达到某种条件，跳出否循环，并返回下标。循环完后，还没有达到触发条件，则继续
+ */
+inline fun <T> Iterable<T>.breakForEachIndexed(booTrue: (index: Int, T) -> Boolean) {
+    kotlin.run run@{
+        forEachIndexed { index, t ->
+            if (booTrue(index, t)) {
+                return@run
+            }
+        }
+    }
+}
+
+/**
+ * For循环时，达到某种条件，跳出否循环，并返回下标。循环完后，还没有达到触发条件，则继续
+ */
+inline fun <T> Collection<T>.breakForEachIndexed(booTrue: (index: Int, T) -> Boolean) {
+    kotlin.run run@{
+        forEachIndexed { index, t ->
+            if (booTrue(index, t)) {
+                return@run
+            }
+        }
+    }
+}
 
 /**
  * 扩展函数,监听view的绘制完成，获取view高度用的

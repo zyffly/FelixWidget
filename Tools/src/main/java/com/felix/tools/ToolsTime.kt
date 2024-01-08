@@ -61,10 +61,10 @@ fun Long.conversionCountDownTimeToHms(): String {
     val second = (this / 1000 % 60).toInt()//秒数
 
     return StringBuffer().append(if (hours >= 10) hours else "0$hours")
-            .append(":")
-            .append(if (minute >= 10) minute else "0$minute")
-            .append(":")
-            .append(if (second >= 10) second else "0$second").toString()
+        .append(":")
+        .append(if (minute >= 10) minute else "0$minute")
+        .append(":")
+        .append(if (second >= 10) second else "0$second").toString()
 }
 
 /**
@@ -119,10 +119,10 @@ fun Long.toMinuteSecond(unitMinute: String, unitSecond: String): String {
     val second = (this / MS_SECOND % 60).toInt()//秒数
 
     return StringBuffer()
-            .append(minute)
-            .append(unitMinute)
-            .append(second)
-            .append(unitSecond).toString()
+        .append(minute)
+        .append(unitMinute)
+        .append(second)
+        .append(unitSecond).toString()
 }
 
 /**
@@ -134,10 +134,10 @@ fun Long?.toFormatMinuteSecond(unitMinute: String, unitSecond: String): String? 
         val second = (this / MS_SECOND % 60).toInt()//秒数
 
         return StringBuffer()
-                .append(if (minute >= 10) minute else "0$minute")
-                .append(unitMinute)
-                .append(if (second >= 10) second else "0$second")
-                .append(unitSecond).toString()
+            .append(if (minute >= 10) minute else "0$minute")
+            .append(unitMinute)
+            .append(if (second >= 10) second else "0$second")
+            .append(unitSecond).toString()
     }
     return null
 
@@ -146,19 +146,23 @@ fun Long?.toFormatMinuteSecond(unitMinute: String, unitSecond: String): String? 
 /**
  * 时间搓转化为分秒，例如: 02:15:03  02小时05分钟05秒
  */
-fun Long?.toFormatHourMinuteSecond(unitHour: String, unitMinute: String, unitSecond: String): String? {
+fun Long?.toFormatHourMinuteSecond(
+    unitHour: String,
+    unitMinute: String,
+    unitSecond: String
+): String? {
     this?.let {
         val hours = toHour()//小时
         val minute = (this / MS_MINUTE % 60).toInt()//分钟
         val second = (this / MS_SECOND % 60).toInt()//秒数
 
         return StringBuffer()
-                .append(if (hours >= 10) hours else "0$hours")
-                .append(unitHour)
-                .append(if (minute >= 10) minute else "0$minute")
-                .append(unitMinute)
-                .append(if (second >= 10) second else "0$second")
-                .append(unitSecond).toString()
+            .append(if (hours >= 10) hours else "0$hours")
+            .append(unitHour)
+            .append(if (minute >= 10) minute else "0$minute")
+            .append(unitMinute)
+            .append(if (second >= 10) second else "0$second")
+            .append(unitSecond).toString()
     }
     return null
 }
@@ -198,19 +202,17 @@ fun Long?.toHmsData(): String? {
     return toData(DateType.SHORT_H_M_S)
 }
 
-fun Long?.toData(@DateType type: String): String? {
+fun Long?.toData(type: String): String? {
     this?.let {
         return SimpleDateFormat(type, Locale.getDefault()).format(this)
     }
     return null
 }
 
-fun String?.dateToLong(): Long {
+fun String?.dateToLong(type: String? = DateType.LINE_Y_M_D_H_M_S): Long {
     try {
         return this?.let {
-            SimpleDateFormat(
-                DateType.LINE_Y_M_D_H_M_S,
-                    Locale.getDefault()).parse(it)?.time
+            SimpleDateFormat(type, Locale.getDefault()).parse(it)?.time
         } ?: 0L
     } catch (e: Exception) {
         ToolLog.printStackTrace(e)
