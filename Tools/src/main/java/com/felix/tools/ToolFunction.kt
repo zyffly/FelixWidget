@@ -106,6 +106,6 @@ inline fun <T : View> T.afterMeasured(crossinline f: T.() -> Unit) {
  * 获取泛型中的类型
  */
 @Suppress("UNCHECKED_CAST")
-fun <VM> getVmClazz(obj: Any): VM {
-    return (obj.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as VM
+fun <VM> getVmClazz(obj: Any): Class<VM> {
+    return (obj.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<VM>
 }

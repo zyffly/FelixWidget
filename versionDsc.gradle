@@ -1,6 +1,14 @@
 ext {
     versionDsc =
+            "1.修改调用的相册的注册项registerAlbumActivityResult。\\n " +
+                    "2.新增通过Uri获取文件，Uri.getFileByUri。\\n " +
+                    "3.新增String字符串的处理，Uri.getFileByUri。\\n " +
+                    "4.新增Sha256的哈希计算，string.getSHA256 和 file.getSHA256。 \\n " +
+                    "5.getVmClazz调整，返回Class<*> \\n "
+
+
+
+    oldVersionDsc = "1.0.9：\\n" +
             "1.修改ToolsTime中的String?.dateToLong函数，支持自定义时间类型。\\n " +
             "2.ToolFunction添加breakForEach和breakForEachIndexed函数,For循环时，达到某种条件，跳出否循环，并返回下标。循环完后，还没有达到触发条件，则继续"
-
 }
